@@ -187,19 +187,40 @@ export default function Settings() {
         return;
       }
 
+      // Check if we're on mobile and handle potential issues
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
       const reader = new FileReader();
       reader.onload = (event) => {
-        const imageData = event.target?.result as string;
-        setTempProfilePicture(imageData);
-        setHasChanges(true);
-        setSaveMessage({ type: 'success', text: '✅ Profile picture selected! Click "Save Changes" to confirm.' });
-        setTimeout(() => setSaveMessage(null), 3000);
+        try {
+          const imageData = event.target?.result as string;
+          if (imageData && imageData.length > 0) {
+            setTempProfilePicture(imageData);
+            setHasChanges(true);
+            setSaveMessage({ type: 'success', text: '✅ Profile picture selected! Click "Save Changes" to confirm.' });
+            setTimeout(() => setSaveMessage(null), 3000);
+          } else {
+            throw new Error('Empty image data');
+          }
+        } catch (error) {
+          console.error('Error processing image:', error);
+          setSaveMessage({ type: 'error', text: '❌ Failed to process the image. Please try again.' });
+          setTimeout(() => setSaveMessage(null), 3000);
+        }
       };
       reader.onerror = () => {
-        setSaveMessage({ type: 'error', text: '❌ Failed to read the image file' });
+        console.error('FileReader error');
+        setSaveMessage({ type: 'error', text: '❌ Failed to read the image file. Please try again.' });
         setTimeout(() => setSaveMessage(null), 3000);
       };
-      reader.readAsDataURL(file);
+
+      try {
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('Error reading file:', error);
+        setSaveMessage({ type: 'error', text: '❌ Failed to read the file. Please try a different image.' });
+        setTimeout(() => setSaveMessage(null), 3000);
+      }
     }
   };
 
@@ -435,6 +456,7 @@ export default function Settings() {
                   accept="image/*"
                   onChange={handleProfilePictureUpload}
                   className="hidden"
+                  capture="environment"
                 />
               </div>
             </div>
