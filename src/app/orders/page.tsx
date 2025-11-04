@@ -60,7 +60,7 @@ export default function Orders() {
         </div>
 
         {/* Filters */}
-        <div className="bg-gray-800 dark:bg-gray-800 rounded-lg shadow-sm border border-gray-700 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -70,7 +70,7 @@ export default function Orders() {
                   placeholder="Search orders..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-600 dark:border-gray-600 rounded-lg bg-gray-700 dark:bg-gray-700 text-white dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 pr-4 py-2 w-full border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -78,7 +78,7 @@ export default function Orders() {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-600 dark:border-gray-600 rounded-lg bg-gray-700 dark:bg-gray-700 text-white dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 {statuses.map(status => (
                   <option key={status} value={status}>
@@ -91,54 +91,54 @@ export default function Orders() {
         </div>
 
         {/* Orders Table */}
-        <div className="bg-gray-800 dark:bg-gray-800 rounded-lg shadow-sm border border-gray-700 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-700 dark:bg-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Order ID
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Customer
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Items
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Total
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-gray-800 dark:bg-gray-800 divide-y divide-gray-700 dark:divide-gray-700">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredOrders.map((order) => (
-                  <tr key={order.id} className="hover:bg-gray-700 dark:hover:bg-gray-700">
+                  <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-white dark:text-white">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">
                         {order.id}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-white dark:text-white">
+                      <span className="text-sm text-gray-900 dark:text-white">
                         {order.customerName}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-white dark:text-white">
+                      <span className="text-sm text-gray-900 dark:text-white">
                         {order.items.length} items
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-white dark:text-white">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">
                         ${order.total.toFixed(2)}
                       </span>
                     </td>
@@ -156,7 +156,7 @@ export default function Orders() {
                       </select>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-white dark:text-white">
+                      <span className="text-sm text-gray-900 dark:text-white">
                         {formatDate(order.createdAt)}
                       </span>
                     </td>
@@ -166,7 +166,7 @@ export default function Orders() {
                           setSelectedOrder(order);
                           setShowOrderModal(true);
                         }}
-                        className="text-blue-400 hover:text-blue-300 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                        className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
                         title="View Order Details"
                       >
                         <Eye size={16} />
@@ -181,17 +181,17 @@ export default function Orders() {
 
         {/* Pagination */}
         <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-300 dark:text-gray-300">
+          <div className="text-sm text-gray-600 dark:text-gray-400">
             Showing {filteredOrders.length} of {orders.length} orders
           </div>
           <div className="flex items-center space-x-2">
-            <button className="px-3 py-1 border border-gray-600 dark:border-gray-600 rounded text-sm hover:bg-gray-700 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300">
+            <button className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400">
               Previous
             </button>
-            <button className="px-3 py-1 bg-blue-600 text-white rounded text-sm">
+            <button className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm">
               1
             </button>
-            <button className="px-3 py-1 border border-gray-600 dark:border-gray-600 rounded text-sm hover:bg-gray-700 dark:hover:bg-gray-700 text-gray-300 dark:text-gray-300">
+            <button className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400">
               Next
             </button>
           </div>
