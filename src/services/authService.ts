@@ -150,7 +150,7 @@ export const registerUser = (email: string, password: string): { success: boolea
     const users = getValidUsers();
 
     // Check if user already exists
-    if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+    if (users.find((u: any) => u.email.toLowerCase() === email.toLowerCase())) {
       return { success: false, message: 'An account with this email already exists' };
     }
 
@@ -172,7 +172,7 @@ export const authenticateUser = (email: string, password: string): boolean => {
 
   // Check if user exists and password matches
   const users = getValidUsers();
-  const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+  const user = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
   if (!user) {
     return false;
   }
