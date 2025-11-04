@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { createSession, isSessionValid, clearSession, getSessionEmail } from '@/services/authService';
 
 export const useAuth = () => {
   const router = useRouter();
@@ -10,7 +11,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     const checkAuth = () => {
-      const auth = localStorage.getItem('isAuthenticated') === 'true';
+      const auth = isSessionValid();
       setIsAuthenticated(auth);
       setIsLoading(false);
 
@@ -28,8 +29,7 @@ export const useAuth = () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       if (email && password) {
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('userEmail', email);
+        createSession(email);
         setIsAuthenticated(true);
         return true;
       }
@@ -41,14 +41,14 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('userEmail');
+    clearSession();
     setIsAuthenticated(false);
+    window.dispatchEvent(new Event('userLoggedOut'));
     router.push('/login');
   };
 
   const getUserEmail = (): string => {
-    return localStorage.getItem('userEmail') || 'admin@example.com';
+    return getSessionEmail() || 'admin@example.com';
   };
 
   return {

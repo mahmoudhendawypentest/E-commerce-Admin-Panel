@@ -239,9 +239,19 @@ export default function Header({ title }: HeaderProps) {
 
   const handleLogout = () => {
     if (confirm('Are you sure you want to logout?')) {
+      // Clear all authentication data
       localStorage.removeItem('isAuthenticated');
       localStorage.removeItem('userEmail');
       localStorage.removeItem('currentSession');
+      localStorage.removeItem('adminProfilePicture');
+
+      // Clear profile picture from context
+      setProfilePicture(null);
+
+      // Dispatch logout event
+      window.dispatchEvent(new CustomEvent('userLoggedOut'));
+
+      // Redirect to login page
       router.push('/login');
     }
   };

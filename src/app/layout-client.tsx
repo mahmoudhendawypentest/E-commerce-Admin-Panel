@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { ProfileProvider } from '@/contexts/ProfileContext';
 import { isSessionValid } from '@/services/authService';
 
-const publicRoutes = ['/login', '/register'];
+const publicRoutes = ['/login', '/register', '/forgot-password', '/reset-password'];
 
 export default function RootLayoutClient({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -28,7 +28,19 @@ export default function RootLayoutClient({ children }: { children: ReactNode }) 
       setIsCheckingAuth(false);
     };
 
+    // Listen for logout events
+    const handleLogout = () => {
+      setIsCheckingAuth(true);
+      checkAuth();
+    };
+
+    window.addEventListener('userLoggedOut', handleLogout);
+
     checkAuth();
+
+    return () => {
+      window.removeEventListener('userLoggedOut', handleLogout);
+    };
   }, [pathname, router]);
 
   // Show loading while checking authentication

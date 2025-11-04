@@ -2,7 +2,7 @@
 
 // Valid admin credentials (in production, this would be on a secure backend)
 const VALID_USERS_KEY = 'registered_users';
-const getValidUsers = () => {
+export const getValidUsers = () => {
   if (typeof window === 'undefined') {
     // Server-side rendering
     return [
@@ -255,4 +255,50 @@ export const getSessionEmail = (): string | null => {
   } catch {
     return null;
   }
+};
+
+// Password reset token management
+export const createPasswordResetToken = (email: string): string => {
+  const token = `reset_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+  const resetData = {
+    email,
+    createdAt: Date.now(),
+    expiresAt: Date.now() + (60 * 60 * 1000), // 1 hour
+  };
+
+  localStorage.setItem(`reset_${token}`, JSON.stringify(resetData));
+  return token;
+};
+
+export const verifyPasswordResetToken = (token: string): string | null => {
+  try {
+    const resetData = localStorage.getItem(`reset_${token}`);
+    if (!resetData) return null;
+
+    const reset = JSON.parse(resetData);
+    if (Date.now() > reset.expiresAt) {
+      localStorage.removeItem(`reset_${token}`);
+      return null;
+    }
+
+    return reset.email;
+  } catch {
+    return null;
+  }
+};
+
+export const clearPasswordResetToken = (token: string): void => {
+  localStorage.removeItem(`reset_${token}`);
+};
+
+// Update user password
+export const updateUserPassword = (email: string, newPassword: string): boolean => {
+  const users = getValidUsers();
+  const userIndex = users.findIndex((u: any) => u.email.toLowerCase() === email.toLowerCase());
+
+  if (userIndex === -1) return false;
+
+  users[userIndex].passwordHash = newPassword; // In production, this should be hashed
+  saveValidUsers(users);
+  return true;
 };
